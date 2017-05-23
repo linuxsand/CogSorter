@@ -32,7 +32,7 @@ USAGE:
                 {
                     if (parts.Length != 2)
                     {
-                        Console.WriteLine(HELP);
+                        Console.WriteLine("please provide .vpp path");
                         break;
                     }
                     hasLoaded = loadManager(parts[1]);
@@ -45,13 +45,18 @@ USAGE:
                 {
                     if (parts.Length != 2)
                     {
-                        Console.WriteLine(HELP);
+                        Console.WriteLine("please provide job sequence");
                         break;
                     }
                     sort(parts[1]);
                 }
                 else if (action == "save")
                 {
+                    if (parts.Length != 2)
+                    {
+                        Console.WriteLine("please provide new file path");
+                        break;
+                    }
                     saveToFile(parts[1]);
                 }
                 else if (action == "exit")
@@ -125,18 +130,20 @@ USAGE:
 
         static void sort(string seqStr)
         {
+         /*
+          +----------+----------+------+----------+------------+
+          | old jobs |  old seq |  --> | new jobs |  input seq |
+          +----------+----------+------+----------+------------+
+          | job_a    |  0       |  --> | job_b    |  1         |
+          +----------+----------+------+----------+------------+
+          | job_b    |  1       |  --> | job_c    |  2         |
+          +----------+----------+------+----------+------------+
+          | job_c    |  2       |  --> | job_a    |  0         |
+          +----------+----------+------+----------+------------+
+         */
             if (manager == null) return;
-            // 1,2,0
             var seq = seqStr.Split(new char[] { ',' });
-            /*
-             * job_a, 0 --> 1
-             * job_b, 1 --> 2
-             * job_c, 2 --> 0
-             * 
-             * 1, 2, 0
-             * 
-             * job_c, job_b, job_a
-            */
+
             HashSet<string> sets = new HashSet<string>(seq);
             if (sets.Count != manager.JobCount)
             {
