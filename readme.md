@@ -8,8 +8,7 @@ Simpley run CogSorter.exe with no arguments, it will print usage message, then l
     > list
     > sort 1,2,0
     > save yyy.vpp
-    
-    > 
+    > exit
 
 -----
 

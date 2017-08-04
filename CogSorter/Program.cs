@@ -17,6 +17,7 @@ USAGE:
 > list
 > sort 1,2,0
 > save yyy.vpp
+> exit
 ";
             bool hasLoaded = false;
             Console.WriteLine(HELP);
@@ -74,6 +75,7 @@ USAGE:
             {
                 manager.Shutdown();
             }
+            manager = null;
         }
 
         static void saveToFile(string vppPath)
@@ -83,9 +85,9 @@ USAGE:
                 CogSerializer.SaveObjectToFile(manager, vppPath);
                 Console.WriteLine("saved");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("sorry, can not save");
+                Console.WriteLine("sorry, can not save: " + e.Message);
             }
         }
 
@@ -106,9 +108,9 @@ USAGE:
             {
                 manager = (CogJobManager)CogSerializer.LoadObjectFromFile(vppPath);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("can not load");
+                Console.WriteLine("can not load: " + e.Message);
                 return false;
             }
             Console.WriteLine("loaded");
